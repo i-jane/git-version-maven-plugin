@@ -23,8 +23,8 @@ public class GitRevisionMojo extends AbstractMojo {
     ) throws MojoExecutionException, MojoFailureException {
         File file = new File(".git");
 
-        String revisionLong = "none";
-        String revisionShort = "none";
+        String revisionLong = "";
+        String revisionShort = "";
 
         try {
             Git git = Git.open(file);
@@ -38,11 +38,11 @@ public class GitRevisionMojo extends AbstractMojo {
                     revisionLong = commit.name();
                     revisionShort = commit.abbreviate(8).name();
                 }
-            } catch (GitAPIException __e) {
-                getLog().error(__e.getMessage());
+            } catch (GitAPIException e) {
+                getLog().error(e.getMessage());
             }
-        } catch (IOException __e) {
-            getLog().error(__e.getMessage());
+        } catch (IOException e) {
+            getLog().error(e.getMessage());
         }
 
         System.setProperty(LONG_PROPERTY, revisionLong);
